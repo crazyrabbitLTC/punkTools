@@ -1,6 +1,89 @@
-type ExampleEntity @entity {
+type Punk @entity {
   id: ID!
-  count: BigInt!
-  to: Bytes! # address
-  punkIndex: BigInt! # uint256
+  owner: Account!
+}
+
+type Account @entity {
+  id: ID! #     Ethereum Address
+  transactions: [Transaction]! @derivedFrom(field: "from")
+}
+
+type Transaction @entity {
+  id: ID!
+  from: Account
+  to: Account
+  value: BigInt!
+  gasUsed: BigInt!
+  gasPrice: BigInt!
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  events: [Event!]! @derivedFrom(field: "transaction")
+}
+
+# Thanks Hadrien @amxx for the design idea
+interface Event {
+  id: ID!
+  transaction: Transaction!
+}
+
+type Assign implements Event @entity {
+  id: ID!
+  transaction: Transaction!
+  to: Account!
+  punkIndex: BigInt!
+}
+
+type Transfer implements Event @entity {
+  id: ID!
+  transaction: Transaction!
+  from: Account!
+  to: Account!
+  value: BigInt!
+}
+
+type PunkTransfer implements Event @entity {
+  id: ID!
+  transaction: Transaction!
+  from: Account!
+  to: Account!
+  punkIndex: BigInt!
+}
+
+type PunkOffered implements Event @entity {
+  id: ID!
+  transaction: Transaction!
+  punkIndex: BigInt!
+  minValue: BigInt!
+  toAddress: Account
+}
+
+type PunkBidEntered implements Event @entity {
+  id: ID!
+  transaction: Transaction!
+  punkIndex: BigInt!
+  value: BigInt!
+  bidder: Account!
+}
+
+type PunkBidWithdrawn implements Event @entity {
+  id: ID!
+  transaction: Transaction!
+  punkIndex: BigInt!
+  value: BigInt!
+  bidder: Account!
+}
+
+type PunkBought implements Event @entity {
+  id: ID!
+  transaction: Transaction!
+  punkIndex: BigInt!
+  value: BigInt!
+  from: Account!
+  to: Account!
+}
+
+type PunkNoLongerForSale implements Event @entity {
+  id: ID!
+  transaction: Transaction!
+  punkIndex: BigInt!
 }
