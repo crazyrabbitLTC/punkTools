@@ -1,11 +1,32 @@
 type Punk @entity {
   id: ID!
   owner: Account!
+  totalOwners: BigInt!
+  highestPrice: BigInt!
+  sales: [PunkBought]! @derivedFrom(field: "punkIndex")
+  offered: [PunkOffered]! @derivedFrom(field: "punkIndex")
+  removedFromSale: [PunkNoLongerForSale]! @derivedFrom(field: "punkIndex")
+  transfers: [PunkTransfer]! @derivedFrom(field: "punkIndex")
+  bids: [PunkBidEntered]! @derivedFrom(field: "punkIndex")
+  failedBids: [PunkBidWithdrawn]! @derivedFrom(field: "punkIndex")
+  events: [Event]! @derivedFrom(field: "punkIndex")
+  assigned: [Assign]! @derivedFrom(field: "punkIndex") 
 }
 
 type Account @entity {
   id: ID! #     Ethereum Address
+  totalSpentBuyingPunks: BigInt!
+  totalEarnedSellingPunks: BigInt!
+  totalPunks: BigInt!
   transactions: [Transaction]! @derivedFrom(field: "from")
+  punks: [Punk]! @derivedFrom(field: "owner")
+  sales: [PunkBought]! @derivedFrom(field: "from")
+  purchases: [PunkBought]! @derivedFrom(field: "to")
+  bids: [PunkBidEntered]! @derivedFrom(field: "bidder")
+  withdrawnBids: [PunkBidWithdrawn]! @derivedFrom(field: "bidder")
+  receivedPunks: [PunkTransfer]! @derivedFrom(field: "to")
+  sentPunks: [PunkTransfer]! @derivedFrom(field: "from")
+  assigned: [Assign]! @derivedFrom(field: "to")
 }
 
 type Transaction @entity {
@@ -24,35 +45,37 @@ type Transaction @entity {
 interface Event {
   id: ID!
   transaction: Transaction!
+  punkIndex: Punk!
 }
 
 type Assign implements Event @entity {
   id: ID!
   transaction: Transaction!
   to: Account!
-  punkIndex: BigInt!
+  punkIndex: Punk!
 }
 
-type Transfer implements Event @entity {
-  id: ID!
-  transaction: Transaction!
-  from: Account!
-  to: Account!
-  value: BigInt!
-}
+# Used only to keep track of the NUMBER of punks owner. Not useful for subgraph. 
+# type Transfer implements Event @entity {
+#   id: ID!
+#   transaction: Transaction!
+#   from: Account!
+#   to: Account!
+#   value: BigInt!
+# }
 
 type PunkTransfer implements Event @entity {
   id: ID!
   transaction: Transaction!
   from: Account!
   to: Account!
-  punkIndex: BigInt!
+  punkIndex: Punk!
 }
 
 type PunkOffered implements Event @entity {
   id: ID!
   transaction: Transaction!
-  punkIndex: BigInt!
+  punkIndex: Punk!
   minValue: BigInt!
   toAddress: Account
 }
@@ -60,7 +83,7 @@ type PunkOffered implements Event @entity {
 type PunkBidEntered implements Event @entity {
   id: ID!
   transaction: Transaction!
-  punkIndex: BigInt!
+  punkIndex: Punk!
   value: BigInt!
   bidder: Account!
 }
@@ -68,7 +91,7 @@ type PunkBidEntered implements Event @entity {
 type PunkBidWithdrawn implements Event @entity {
   id: ID!
   transaction: Transaction!
-  punkIndex: BigInt!
+  punkIndex: Punk!
   value: BigInt!
   bidder: Account!
 }
@@ -76,7 +99,7 @@ type PunkBidWithdrawn implements Event @entity {
 type PunkBought implements Event @entity {
   id: ID!
   transaction: Transaction!
-  punkIndex: BigInt!
+  punkIndex: Punk!
   value: BigInt!
   from: Account!
   to: Account!
@@ -85,5 +108,5 @@ type PunkBought implements Event @entity {
 type PunkNoLongerForSale implements Event @entity {
   id: ID!
   transaction: Transaction!
-  punkIndex: BigInt!
+  punkIndex: Punk!
 }
