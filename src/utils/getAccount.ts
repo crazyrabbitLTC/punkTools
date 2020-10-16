@@ -1,6 +1,5 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { Account } from "../../generated/schema"
-import { ADDRESS_ZERO } from "./CONSTS"
 
 
 

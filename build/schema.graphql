@@ -3,6 +3,9 @@ type Punk @entity {
   owner: Account!
   totalOwners: BigInt!
   highestPrice: BigInt!
+  highestBid: BigInt! 
+  hasBid: Boolean!
+  forSale: Boolean!
   sales: [PunkBought]! @derivedFrom(field: "punkIndex")
   offered: [PunkOffered]! @derivedFrom(field: "punkIndex")
   removedFromSale: [PunkNoLongerForSale]! @derivedFrom(field: "punkIndex")
@@ -14,12 +17,15 @@ type Punk @entity {
 }
 
 type Account @entity {
-  id: ID! #     Ethereum Address
+  id: ID! 
   totalSpentBuyingPunks: BigInt!
   totalEarnedSellingPunks: BigInt!
   totalPunks: BigInt!
   totalOffered: BigInt!
   interactionCount: BigInt!
+  highestBid: BigInt! 
+  openBidCount: BigInt!
+  highestPricePaid: BigInt!
   transactions: [Transaction]! @derivedFrom(field: "from")
   punks: [Punk]! @derivedFrom(field: "owner")
   sales: [PunkBought]! @derivedFrom(field: "from")
@@ -56,15 +62,6 @@ type Assign implements Event @entity {
   to: Account!
   punkIndex: Punk!
 }
-
-# Used only to keep track of the NUMBER of punks owner. Not useful for subgraph. 
-# type Transfer implements Event @entity {
-#   id: ID!
-#   transaction: Transaction!
-#   from: Account!
-#   to: Account!
-#   value: BigInt!
-# }
 
 type PunkTransfer implements Event @entity {
   id: ID!

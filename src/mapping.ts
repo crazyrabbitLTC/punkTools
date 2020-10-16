@@ -1,10 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts"
-import { pbkdf2 } from "crypto"
-import { unlink } from "fs"
 import {
-  Contract,
   Assign,
-  Transfer,
   PunkTransfer,
   PunkOffered,
   PunkBidEntered,
@@ -12,11 +8,7 @@ import {
   PunkBought,
   PunkNoLongerForSale
 } from "../generated/Contract/Contract"
-import { Punk, Account, Assign as AssignEntity, PunkTransfer as PTE,
-PunkOffered as PO,
-PunkBidEntered as PBE,
-PunkBidWithdrawn as PBW,
-PunkBought as PB } from "../generated/schema"
+import { Punk, Account, Assign as AssignEntity, PunkTransfer as PTE, PunkOffered as PO, PunkBidEntered as PBE, PunkBidWithdrawn as PBW, PunkBought as PB, PunkNoLongerForSale as PNLFS } from "../generated/schema"
 import { getAccount } from "./utils/getAccount"
 import { getPunk } from "./utils/getPunk"
 import { logTransaction } from "./utils/logTransaction"
@@ -31,7 +23,7 @@ export function handleAssign(event: Assign): void {
   punk.owner = recipient.id
 
   //This counts previous owners again
-  punk.totalOwners = punk.totalOwners.plus(BigInt.fromI32(1)) 
+  punk.totalOwners = punk.totalOwners.plus(BigInt.fromI32(1))
 
   let ass = new AssignEntity(tx.id.concat(`-assign`))
   ass.transaction = tx.id
@@ -45,7 +37,7 @@ export function handleAssign(event: Assign): void {
 
 // export function handleTransfer(event: Transfer): void { }
 
-export function handlePunkTransfer(event: PunkTransfer): void { 
+export function handlePunkTransfer(event: PunkTransfer): void {
   let tx = logTransaction(event)
 
   let hpt = new PTE(tx.id.concat(`-punkTransfer`))
@@ -62,7 +54,7 @@ export function handlePunkTransfer(event: PunkTransfer): void {
 
   from.totalPunks = from.totalPunks.minus(BigInt.fromI32(1))
   to.totalPunks = to.totalPunks.plus(BigInt.fromI32(1))
-  
+
   punk.totalOwners = punk.totalOwners.plus(BigInt.fromI32(1))
   punk.owner = to.id
 
@@ -71,7 +63,7 @@ export function handlePunkTransfer(event: PunkTransfer): void {
   punk.save()
 }
 
-export function handlePunkOffered(event: PunkOffered): void { 
+export function handlePunkOffered(event: PunkOffered): void {
   let tx = logTransaction(event)
 
   let punk = getPunk(event.params.punkIndex)
@@ -81,7 +73,7 @@ export function handlePunkOffered(event: PunkOffered): void {
 
   let to = getAccount(event.params.toAddress)
   to.totalOffered = to.totalOffered.plus(amount)
-  
+
   let punkOffered = new PO(tx.id.concat(`-punkOffered`))
   punkOffered.transaction = tx.id
   punkOffered.punkIndex = punk.id
@@ -93,7 +85,7 @@ export function handlePunkOffered(event: PunkOffered): void {
 
 }
 
-export function handlePunkBidEntered(event: PunkBidEntered): void { 
+export function handlePunkBidEntered(event: PunkBidEntered): void {
   let tx = logTransaction(event)
 
   let amount = event.params.value
@@ -103,7 +95,7 @@ export function handlePunkBidEntered(event: PunkBidEntered): void {
 
   let bidder = getAccount(event.params.fromAddress)
   bidder.openBidCount = bidder.openBidCount.plus(BigInt.fromI32(1))
-  
+
 
   //new event thing
   let pde = new PBE(punk.id.concat(`-`).concat(bidder.id).concat(`-punkBidEntered`))
@@ -113,12 +105,12 @@ export function handlePunkBidEntered(event: PunkBidEntered): void {
   pde.bidder = bidder.id
 
   let punkHighestBid = punk.highestBid
-  if(amount.gt(punkHighestBid)){
+  if (amount.gt(punkHighestBid)) {
     punk.highestBid = amount
   }
 
   let bidderHighestBid = bidder.highestBid
-  if(amount.gt(bidderHighestBid)){
+  if (amount.gt(bidderHighestBid)) {
     bidder.highestBid = amount
   }
 
@@ -132,9 +124,9 @@ export function handlePunkBidWithdrawn(event: PunkBidWithdrawn): void {
 
   let punk = getPunk(event.params.punkIndex)
   punk.hasBid = false
-  
+
   let value = event.params.value
-  
+
   let bidder = getAccount(event.params.fromAddress)
   bidder.openBidCount = bidder.openBidCount.minus(BigInt.fromI32(1))
 
@@ -167,13 +159,13 @@ export function handlePunkBought(event: PunkBought): void {
 
   //If this is the highest price the punk sold for
   let highestPunkPrice = punk.highestPrice
-  if(value.gt(highestPunkPrice)){
+  if (value.gt(highestPunkPrice)) {
     punk.highestPrice = value
   }
 
   //If this is the highest price that the account paid
   let highestPricePaid = to.highestPricePaid
-  if(value.gt(highestPricePaid)){
+  if (value.gt(highestPricePaid)) {
     to.highestPricePaid = value
   }
 
@@ -195,7 +187,7 @@ export function handlePunkBought(event: PunkBought): void {
 
   //Is there an open bid for this punk from the To? 
   let openBid = PBE.load(punk.id.concat(`-`).concat(to.id).concat(`-punkBidEntered`))
-  if(openBid != null){
+  if (openBid != null) {
     to.openBidCount = to.openBidCount.minus(BigInt.fromI32(1))
   }
 
@@ -206,12 +198,18 @@ export function handlePunkBought(event: PunkBought): void {
 
 }
 
-export function handlePunkNoLongerForSale(event: PunkNoLongerForSale): void { 
+export function handlePunkNoLongerForSale(event: PunkNoLongerForSale): void {
   let tx = logTransaction(event)
+
+  let punkNoLongerForSale = new PNLFS(tx.id.concat(`-punkNoLongerForSale`))
+  punkNoLongerForSale.transaction = tx.id
 
   let punk = getPunk(event.params.punkIndex)
   punk.forSale = false
+  punkNoLongerForSale.punkIndex = punk.id
 
   punk.save()
 
 }
+
+export function handleTransfer(): void {}
