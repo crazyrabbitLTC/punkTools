@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, log } from "@graphprotocol/graph-ts"
 import {
   Assign,
   PunkTransfer,
@@ -8,7 +8,7 @@ import {
   PunkBought,
   PunkNoLongerForSale
 } from "../generated/Contract/Contract"
-import { Punk, Account, Assign as AssignEntity, PunkTransfer as PTE, PunkOffered as PO, PunkBidEntered as PBE, PunkBidWithdrawn as PBW, PunkBought as PB, PunkNoLongerForSale as PNLFS } from "../generated/schema"
+import { Assign as AssignEntity, PunkTransfer as PTE, PunkOffered as PO, PunkBidEntered as PBE, PunkBidWithdrawn as PBW, PunkBought as PB, PunkNoLongerForSale as PNLFS } from "../generated/schema"
 import { getAccount } from "./utils/getAccount"
 import { getPunk } from "./utils/getPunk"
 import { logTransaction } from "./utils/logTransaction"
@@ -18,20 +18,21 @@ export function handleAssign(event: Assign): void {
 
   let recipient = getAccount(event.params.to)
   recipient.totalPunks = recipient.totalPunks.plus(BigInt.fromI32(1))
+  recipient.save()
 
   let punk = getPunk(event.params.punkIndex)
   punk.owner = recipient.id
 
   //This counts previous owners again
   punk.totalOwners = punk.totalOwners.plus(BigInt.fromI32(1))
+  punk.save()
 
-  let ass = new AssignEntity(tx.id.concat(`-assign`))
+  let ass = new AssignEntity(tx.id.concat(`-`).concat(event.params.punkIndex.toString()).concat(`-assign`))
   ass.transaction = tx.id
   ass.to = recipient.id
   ass.punkIndex = punk.id
 
-  recipient.save()
-  punk.save()
+  ass.save()
 
 }
 

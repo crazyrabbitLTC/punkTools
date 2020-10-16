@@ -16,6 +16,7 @@ export function getAccount(address: Address): Account {
         account.highestBid = BigInt.fromI32(0)
         account.highestPricePaid = BigInt.fromI32(0)
         account.openBidCount = BigInt.fromI32(0)
+        account.totalOffered = BigInt.fromI32(0)
         account.save()
     }
 

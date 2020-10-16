@@ -7,7 +7,8 @@ export function getPunk(punkIndex: BigInt): Punk {
     let punk = Punk.load(punkIndex.toString())
     
     if (punk == null) {
-        punk.totalOwners = BigInt.fromI32(0)
+        punk = new Punk(punkIndex.toString())
+        punk.totalOwners = BigInt.fromI32(1)
         punk.highestPrice = BigInt.fromI32(0)
         punk.highestBid = BigInt.fromI32(0)
         punk.hasBid = false
