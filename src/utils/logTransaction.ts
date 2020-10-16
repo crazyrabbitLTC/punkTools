@@ -1,5 +1,4 @@
-import { ethereum, Address, log, BigInt } from "@graphprotocol/graph-ts"
-
+import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts"
 import { Transaction } from "../../generated/schema"
 import { getAccount } from "./getAccount"
 import { ADDRESS_ZERO } from "./CONSTS"

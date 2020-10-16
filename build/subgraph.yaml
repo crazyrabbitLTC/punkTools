@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Contract
@@ -23,12 +23,10 @@ dataSources:
         - PunkNoLongerForSale
       abis:
         - name: Contract
-          file: ./abis/Contract.json
+          file: Contract/abis/Contract.json
       eventHandlers:
         - event: Assign(indexed address,uint256)
           handler: handleAssign
-        # - event: Transfer(indexed address,indexed address,uint256)
-        #   handler: handleTransfer
         - event: PunkTransfer(indexed address,indexed address,uint256)
           handler: handlePunkTransfer
         - event: PunkOffered(indexed uint256,uint256,indexed address)
@@ -41,4 +39,4 @@ dataSources:
           handler: handlePunkBought
         - event: PunkNoLongerForSale(indexed uint256)
           handler: handlePunkNoLongerForSale
-      file: ./src/mapping.ts
+      file: Contract/Contract.wasm

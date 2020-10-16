@@ -3,9 +3,6 @@ type Punk @entity {
   owner: Account!
   totalOwners: BigInt!
   highestPrice: BigInt!
-  highestBid: BigInt! # This is Historical not current
-  hasBid: Boolean!
-  forSale: Boolean!
   sales: [PunkBought]! @derivedFrom(field: "punkIndex")
   offered: [PunkOffered]! @derivedFrom(field: "punkIndex")
   removedFromSale: [PunkNoLongerForSale]! @derivedFrom(field: "punkIndex")
@@ -23,9 +20,6 @@ type Account @entity {
   totalPunks: BigInt!
   totalOffered: BigInt!
   interactionCount: BigInt!
-  highestBid: BigInt! # Highest bid they created
-  openBidCount: BigInt!
-  highestPricePaid: BigInt!
   transactions: [Transaction]! @derivedFrom(field: "from")
   punks: [Punk]! @derivedFrom(field: "owner")
   sales: [PunkBought]! @derivedFrom(field: "from")

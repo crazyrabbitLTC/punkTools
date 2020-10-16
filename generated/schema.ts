@@ -50,6 +50,123 @@ export class Punk extends Entity {
   set owner(value: string) {
     this.set("owner", Value.fromString(value));
   }
+
+  get totalOwners(): BigInt {
+    let value = this.get("totalOwners");
+    return value.toBigInt();
+  }
+
+  set totalOwners(value: BigInt) {
+    this.set("totalOwners", Value.fromBigInt(value));
+  }
+
+  get highestPrice(): BigInt {
+    let value = this.get("highestPrice");
+    return value.toBigInt();
+  }
+
+  set highestPrice(value: BigInt) {
+    this.set("highestPrice", Value.fromBigInt(value));
+  }
+
+  get highestBid(): BigInt {
+    let value = this.get("highestBid");
+    return value.toBigInt();
+  }
+
+  set highestBid(value: BigInt) {
+    this.set("highestBid", Value.fromBigInt(value));
+  }
+
+  get hasBid(): boolean {
+    let value = this.get("hasBid");
+    return value.toBoolean();
+  }
+
+  set hasBid(value: boolean) {
+    this.set("hasBid", Value.fromBoolean(value));
+  }
+
+  get forSale(): boolean {
+    let value = this.get("forSale");
+    return value.toBoolean();
+  }
+
+  set forSale(value: boolean) {
+    this.set("forSale", Value.fromBoolean(value));
+  }
+
+  get sales(): Array<string | null> {
+    let value = this.get("sales");
+    return value.toStringArray();
+  }
+
+  set sales(value: Array<string | null>) {
+    this.set("sales", Value.fromStringArray(value));
+  }
+
+  get offered(): Array<string | null> {
+    let value = this.get("offered");
+    return value.toStringArray();
+  }
+
+  set offered(value: Array<string | null>) {
+    this.set("offered", Value.fromStringArray(value));
+  }
+
+  get removedFromSale(): Array<string | null> {
+    let value = this.get("removedFromSale");
+    return value.toStringArray();
+  }
+
+  set removedFromSale(value: Array<string | null>) {
+    this.set("removedFromSale", Value.fromStringArray(value));
+  }
+
+  get transfers(): Array<string | null> {
+    let value = this.get("transfers");
+    return value.toStringArray();
+  }
+
+  set transfers(value: Array<string | null>) {
+    this.set("transfers", Value.fromStringArray(value));
+  }
+
+  get bids(): Array<string | null> {
+    let value = this.get("bids");
+    return value.toStringArray();
+  }
+
+  set bids(value: Array<string | null>) {
+    this.set("bids", Value.fromStringArray(value));
+  }
+
+  get failedBids(): Array<string | null> {
+    let value = this.get("failedBids");
+    return value.toStringArray();
+  }
+
+  set failedBids(value: Array<string | null>) {
+    this.set("failedBids", Value.fromStringArray(value));
+  }
+
+  get events(): Array<string | null> {
+    let value = this.get("events");
+    return value.toStringArray();
+  }
+
+  set events(value: Array<string | null>) {
+    this.set("events", Value.fromStringArray(value));
+  }
+
+  get assigned(): Array<string | null> {
+    let value = this.get("assigned");
+    return value.toStringArray();
+  }
+
+  set assigned(value: Array<string | null>) {
+    this.set("assigned", Value.fromStringArray(value));
+  }
 }
 
 export class Account extends Entity {
@@ -82,6 +199,78 @@ export class Account extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get totalSpentBuyingPunks(): BigInt {
+    let value = this.get("totalSpentBuyingPunks");
+    return value.toBigInt();
+  }
+
+  set totalSpentBuyingPunks(value: BigInt) {
+    this.set("totalSpentBuyingPunks", Value.fromBigInt(value));
+  }
+
+  get totalEarnedSellingPunks(): BigInt {
+    let value = this.get("totalEarnedSellingPunks");
+    return value.toBigInt();
+  }
+
+  set totalEarnedSellingPunks(value: BigInt) {
+    this.set("totalEarnedSellingPunks", Value.fromBigInt(value));
+  }
+
+  get totalPunks(): BigInt {
+    let value = this.get("totalPunks");
+    return value.toBigInt();
+  }
+
+  set totalPunks(value: BigInt) {
+    this.set("totalPunks", Value.fromBigInt(value));
+  }
+
+  get totalOffered(): BigInt {
+    let value = this.get("totalOffered");
+    return value.toBigInt();
+  }
+
+  set totalOffered(value: BigInt) {
+    this.set("totalOffered", Value.fromBigInt(value));
+  }
+
+  get interactionCount(): BigInt {
+    let value = this.get("interactionCount");
+    return value.toBigInt();
+  }
+
+  set interactionCount(value: BigInt) {
+    this.set("interactionCount", Value.fromBigInt(value));
+  }
+
+  get highestBid(): BigInt {
+    let value = this.get("highestBid");
+    return value.toBigInt();
+  }
+
+  set highestBid(value: BigInt) {
+    this.set("highestBid", Value.fromBigInt(value));
+  }
+
+  get openBidCount(): BigInt {
+    let value = this.get("openBidCount");
+    return value.toBigInt();
+  }
+
+  set openBidCount(value: BigInt) {
+    this.set("openBidCount", Value.fromBigInt(value));
+  }
+
+  get highestPricePaid(): BigInt {
+    let value = this.get("highestPricePaid");
+    return value.toBigInt();
+  }
+
+  set highestPricePaid(value: BigInt) {
+    this.set("highestPricePaid", Value.fromBigInt(value));
+  }
+
   get transactions(): Array<string | null> {
     let value = this.get("transactions");
     return value.toStringArray();
@@ -89,6 +278,78 @@ export class Account extends Entity {
 
   set transactions(value: Array<string | null>) {
     this.set("transactions", Value.fromStringArray(value));
+  }
+
+  get punks(): Array<string | null> {
+    let value = this.get("punks");
+    return value.toStringArray();
+  }
+
+  set punks(value: Array<string | null>) {
+    this.set("punks", Value.fromStringArray(value));
+  }
+
+  get sales(): Array<string | null> {
+    let value = this.get("sales");
+    return value.toStringArray();
+  }
+
+  set sales(value: Array<string | null>) {
+    this.set("sales", Value.fromStringArray(value));
+  }
+
+  get purchases(): Array<string | null> {
+    let value = this.get("purchases");
+    return value.toStringArray();
+  }
+
+  set purchases(value: Array<string | null>) {
+    this.set("purchases", Value.fromStringArray(value));
+  }
+
+  get bids(): Array<string | null> {
+    let value = this.get("bids");
+    return value.toStringArray();
+  }
+
+  set bids(value: Array<string | null>) {
+    this.set("bids", Value.fromStringArray(value));
+  }
+
+  get withdrawnBids(): Array<string | null> {
+    let value = this.get("withdrawnBids");
+    return value.toStringArray();
+  }
+
+  set withdrawnBids(value: Array<string | null>) {
+    this.set("withdrawnBids", Value.fromStringArray(value));
+  }
+
+  get receivedPunks(): Array<string | null> {
+    let value = this.get("receivedPunks");
+    return value.toStringArray();
+  }
+
+  set receivedPunks(value: Array<string | null>) {
+    this.set("receivedPunks", Value.fromStringArray(value));
+  }
+
+  get sentPunks(): Array<string | null> {
+    let value = this.get("sentPunks");
+    return value.toStringArray();
+  }
+
+  set sentPunks(value: Array<string | null>) {
+    this.set("sentPunks", Value.fromStringArray(value));
+  }
+
+  get assigned(): Array<string | null> {
+    let value = this.get("assigned");
+    return value.toStringArray();
+  }
+
+  set assigned(value: Array<string | null>) {
+    this.set("assigned", Value.fromStringArray(value));
   }
 }
 
@@ -259,80 +520,13 @@ export class Assign extends Entity {
     this.set("to", Value.fromString(value));
   }
 
-  get punkIndex(): BigInt {
+  get punkIndex(): string {
     let value = this.get("punkIndex");
-    return value.toBigInt();
-  }
-
-  set punkIndex(value: BigInt) {
-    this.set("punkIndex", Value.fromBigInt(value));
-  }
-}
-
-export class Transfer extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save Transfer entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Transfer entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Transfer", id.toString(), this);
-  }
-
-  static load(id: string): Transfer | null {
-    return store.get("Transfer", id) as Transfer | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
     return value.toString();
   }
 
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get transaction(): string {
-    let value = this.get("transaction");
-    return value.toString();
-  }
-
-  set transaction(value: string) {
-    this.set("transaction", Value.fromString(value));
-  }
-
-  get from(): string {
-    let value = this.get("from");
-    return value.toString();
-  }
-
-  set from(value: string) {
-    this.set("from", Value.fromString(value));
-  }
-
-  get to(): string {
-    let value = this.get("to");
-    return value.toString();
-  }
-
-  set to(value: string) {
-    this.set("to", Value.fromString(value));
-  }
-
-  get value(): BigInt {
-    let value = this.get("value");
-    return value.toBigInt();
-  }
-
-  set value(value: BigInt) {
-    this.set("value", Value.fromBigInt(value));
+  set punkIndex(value: string) {
+    this.set("punkIndex", Value.fromString(value));
   }
 }
 
@@ -393,13 +587,13 @@ export class PunkTransfer extends Entity {
     this.set("to", Value.fromString(value));
   }
 
-  get punkIndex(): BigInt {
+  get punkIndex(): string {
     let value = this.get("punkIndex");
-    return value.toBigInt();
+    return value.toString();
   }
 
-  set punkIndex(value: BigInt) {
-    this.set("punkIndex", Value.fromBigInt(value));
+  set punkIndex(value: string) {
+    this.set("punkIndex", Value.fromString(value));
   }
 }
 
@@ -442,13 +636,13 @@ export class PunkOffered extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get punkIndex(): BigInt {
+  get punkIndex(): string {
     let value = this.get("punkIndex");
-    return value.toBigInt();
+    return value.toString();
   }
 
-  set punkIndex(value: BigInt) {
-    this.set("punkIndex", Value.fromBigInt(value));
+  set punkIndex(value: string) {
+    this.set("punkIndex", Value.fromString(value));
   }
 
   get minValue(): BigInt {
@@ -517,13 +711,13 @@ export class PunkBidEntered extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get punkIndex(): BigInt {
+  get punkIndex(): string {
     let value = this.get("punkIndex");
-    return value.toBigInt();
+    return value.toString();
   }
 
-  set punkIndex(value: BigInt) {
-    this.set("punkIndex", Value.fromBigInt(value));
+  set punkIndex(value: string) {
+    this.set("punkIndex", Value.fromString(value));
   }
 
   get value(): BigInt {
@@ -584,13 +778,13 @@ export class PunkBidWithdrawn extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get punkIndex(): BigInt {
+  get punkIndex(): string {
     let value = this.get("punkIndex");
-    return value.toBigInt();
+    return value.toString();
   }
 
-  set punkIndex(value: BigInt) {
-    this.set("punkIndex", Value.fromBigInt(value));
+  set punkIndex(value: string) {
+    this.set("punkIndex", Value.fromString(value));
   }
 
   get value(): BigInt {
@@ -651,13 +845,13 @@ export class PunkBought extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get punkIndex(): BigInt {
+  get punkIndex(): string {
     let value = this.get("punkIndex");
-    return value.toBigInt();
+    return value.toString();
   }
 
-  set punkIndex(value: BigInt) {
-    this.set("punkIndex", Value.fromBigInt(value));
+  set punkIndex(value: string) {
+    this.set("punkIndex", Value.fromString(value));
   }
 
   get value(): BigInt {
@@ -727,12 +921,12 @@ export class PunkNoLongerForSale extends Entity {
     this.set("transaction", Value.fromString(value));
   }
 
-  get punkIndex(): BigInt {
+  get punkIndex(): string {
     let value = this.get("punkIndex");
-    return value.toBigInt();
+    return value.toString();
   }
 
-  set punkIndex(value: BigInt) {
-    this.set("punkIndex", Value.fromBigInt(value));
+  set punkIndex(value: string) {
+    this.set("punkIndex", Value.fromString(value));
   }
 }
