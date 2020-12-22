@@ -1,6 +1,8 @@
 {
   "name": "punk-tools",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "author": "Dennison Bertram",
+  "email": "dennison@dennisonbertram.com",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
