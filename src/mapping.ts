@@ -82,6 +82,7 @@ export function handlePunkOffered(event: PunkOffered): void {
   punkOffered.toAddress = to.id
 
   punk.save()
+  punkOffered.save()
   to.save()
 
 }
